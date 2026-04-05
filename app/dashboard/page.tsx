@@ -1,6 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { createSupabaseClient } from "@/lib/supabaseClient";
 
 export default function DashboardPage() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    const supabase = createSupabaseClient();
+    await supabase.auth.signOut();
+    router.push("/login");
+  };
+
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-8 text-slate-100 sm:px-10 lg:px-12">
       <div className="mx-auto max-w-7xl">
@@ -21,15 +33,16 @@ export default function DashboardPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3 text-sm text-slate-300">
-            <Link href="/dashboard" className="rounded-full border border-slate-700/60 bg-slate-950/80 px-4 py-2 transition hover:border-cyan-400/40 hover:text-white">
+            <span className="rounded-full border border-slate-700/60 bg-slate-950/80 px-4 py-2 text-white">
               Dashboard
-            </Link>
-            <Link href="/reports" className="rounded-full border border-slate-700/60 bg-slate-950/80 px-4 py-2 transition hover:border-cyan-400/40 hover:text-white">
-              Reports
-            </Link>
-            <Link href="/settings" className="rounded-full border border-slate-700/60 bg-slate-950/80 px-4 py-2 transition hover:border-cyan-400/40 hover:text-white">
-              Settings
-            </Link>
+            </span>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="rounded-full border border-rose-500/60 bg-rose-500/10 px-4 py-2 text-rose-200 transition hover:bg-rose-500/20 hover:text-white"
+            >
+              Cerrar sesión
+            </button>
           </div>
         </header>
 
