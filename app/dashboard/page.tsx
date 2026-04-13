@@ -1,11 +1,13 @@
 "use client";
 
-import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createSupabaseClient } from "@/lib/supabaseClient";
 
 export default function DashboardPage() {
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     const supabase = createSupabaseClient();
@@ -32,17 +34,41 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 text-sm text-gray-700">
-            <span className="rounded-full border border-gray-300 bg-white px-4 py-2 text-gray-900 shadow-sm">
-              Dashboard
-            </span>
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="rounded-full border border-red-300 bg-red-50 px-4 py-2 text-red-600 transition hover:bg-red-100 hover:text-red-700"
-            >
-              Cerrar sesión
-            </button>
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="rounded-full border border-gray-300 bg-white p-2 text-gray-700 shadow-sm transition hover:bg-gray-100"
+              >
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                </svg>
+              </button>
+              {menuOpen && (
+                <div className="absolute right-0 mt-2 w-48 rounded-2xl border border-gray-200 bg-white shadow-lg z-50">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                    }}
+                    className="w-full px-4 py-3 text-left text-sm text-gray-700 transition hover:bg-gray-50 rounded-t-2xl"
+                  >
+                    Editar perfil
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      handleLogout();
+                    }}
+                    className="w-full px-4 py-3 text-left text-sm text-red-600 transition hover:bg-red-50 rounded-b-2xl border-t border-gray-100"
+                  >
+                    Cerrar sesión
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </header>
 
@@ -122,16 +148,43 @@ export default function DashboardPage() {
             </div>
 
             <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">
-              <p className="text-sm uppercase tracking-[0.3em] text-gray-500">Control de actuadores</p>
-              <div className="mt-6 grid gap-4">
-                <button className="rounded-3xl bg-cyan-500 px-5 py-4 text-left text-sm font-semibold text-white transition hover:bg-cyan-600">
-                  Ventilación: Encendida
+              <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Ventilación</p>
+              <div className="flex flex-col items-center gap-4">
+                <div className="relative h-24 w-24">
+                  <Image
+                    src="/ventilador.svg"
+                    alt="Ventilador"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <div className="w-full text-center">
+                  <p className="text-sm text-gray-600">Estado actual</p>
+                  <p className="mt-1 text-2xl font-semibold text-cyan-600">Encendida</p>
+                </div>
+                <button className="w-full rounded-3xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-600">
+                  Control
                 </button>
-                <button className="rounded-3xl bg-amber-500 px-5 py-4 text-left text-sm font-semibold text-white transition hover:bg-amber-600">
-                  Iluminación: Automática
-                </button>
-                <button className="rounded-3xl border border-gray-300 bg-gray-50 px-5 py-4 text-left text-sm text-gray-700 transition hover:border-cyan-400 hover:bg-cyan-50">
-                  Ver modo adaptativo
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">
+              <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Iluminación</p>
+              <div className="flex flex-col items-center gap-4">
+                <div className="relative h-24 w-24">
+                  <Image
+                    src="/luz.svg"
+                    alt="Iluminación"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <div className="w-full text-center">
+                  <p className="text-sm text-gray-600">Estado actual</p>
+                  <p className="mt-1 text-2xl font-semibold text-amber-600">Automática</p>
+                </div>
+                <button className="w-full rounded-3xl bg-amber-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-amber-600">
+                  Control
                 </button>
               </div>
             </div>

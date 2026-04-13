@@ -1,0 +1,68 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="luzGradient" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#fef08a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Fondo circular -->
+  <circle cx="256" cy="256" r="240" fill="url(#luzGradient)" opacity="0.3"/>
+  <circle cx="256" cy="256" r="220" fill="url(#luzGradient)" opacity="0.2"/>
+  
+  <!-- Círculo principal -->
+  <circle cx="256" cy="256" r="180" fill="#fbbf24"/>
+  <circle cx="256" cy="256" r="170" fill="#f59e0b"/>
+  
+  <!-- Rayos de luz -->
+  <!-- Rayo arriba -->
+  <rect x="245" y="60" width="22" height="40" rx="11" fill="white"/>
+  <!-- Rayo arriba derecha -->
+  <g transform="rotate(45 256 256)">
+    <rect x="245" y="60" width="22" height="40" rx="11" fill="white"/>
+  </g>
+  <!-- Rayo derecha -->
+  <g transform="rotate(90 256 256)">
+    <rect x="245" y="60" width="22" height="40" rx="11" fill="white"/>
+  </g>
+  <!-- Rayo abajo derecha -->
+  <g transform="rotate(135 256 256)">
+    <rect x="245" y="60" width="22" height="40" rx="11" fill="white"/>
+  </g>
+  <!-- Rayo abajo -->
+  <g transform="rotate(180 256 256)">
+    <rect x="245" y="60" width="22" height="40" rx="11" fill="white"/>
+  </g>
+  <!-- Rayo abajo izquierda -->
+  <g transform="rotate(225 256 256)">
+    <rect x="245" y="60" width="22" height="40" rx="11" fill="white"/>
+  </g>
+  <!-- Rayo izquierda -->
+  <g transform="rotate(270 256 256)">
+    <rect x="245" y="60" width="22" height="40" rx="11" fill="white"/>
+  </g>
+  <!-- Rayo arriba izquierda -->
+  <g transform="rotate(315 256 256)">
+    <rect x="245" y="60" width="22" height="40" rx="11" fill="white"/>
+  </g>
+  
+  <!-- Bombilla -->
+  <!-- Bulbo de la bombilla -->
+  <path d="M 256 120 Q 200 120 200 180 Q 200 240 220 260 L 292 260 Q 312 240 312 180 Q 312 120 256 120 Z" fill="white"/>
+  
+  <!-- Reflejo en la bombilla -->
+  <ellipse cx="230" cy="160" rx="15" ry="25" fill="white" opacity="0.6"/>
+  <ellipse cx="220" cy="200" rx="8" ry="15" fill="white" opacity="0.3"/>
+  
+  <!-- Casquillo -->
+  <rect x="220" y="260" width="72" height="8" fill="#d97706" rx="2"/>
+  <rect x="210" y="268" width="92" height="10" fill="#b45309" rx="2"/>
+  <rect x="210" y="278" width="92" height="6" fill="#d97706" rx="1"/>
+  <rect x="215" y="284" width="82" height="8" fill="#b45309" rx="2"/>
+  
+  <!-- Detalles decorativos -->
+  <circle cx="140" cy="120" r="8" fill="white" opacity="0.3"/>
+  <circle cx="380" cy="140" r="7" fill="white" opacity="0.3"/>
+  <circle cx="350" cy="340" r="8" fill="white" opacity="0.4"/>
+  <circle cx="180" cy="360" r="6" fill="white" opacity="0.3"/>
+</svg>
