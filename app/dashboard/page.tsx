@@ -152,7 +152,7 @@ export default function DashboardPage() {
               <div className="flex flex-col items-center gap-4">
                 <div className="relative h-24 w-24">
                   <Image
-                    src="/ventilador.svg"
+                    src="/Ventilador.png"
                     alt="Ventilador"
                     fill
                     className="object-contain"
@@ -173,7 +173,7 @@ export default function DashboardPage() {
               <div className="flex flex-col items-center gap-4">
                 <div className="relative h-24 w-24">
                   <Image
-                    src="/luz.svg"
+                    src="/Luz.png"
                     alt="Iluminación"
                     fill
                     className="object-contain"
@@ -187,24 +187,6 @@ export default function DashboardPage() {
                   Control
                 </button>
               </div>
-            </div>
-
-            <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">
-              <p className="text-sm uppercase tracking-[0.3em] text-gray-500">Resumen rápido</p>
-              <ul className="mt-6 space-y-4 text-gray-700">
-                <li className="flex items-center gap-3 rounded-3xl bg-gray-50 p-4">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-100 text-cyan-600">1</span>
-                  Temperatura y luz balanceadas para bienestar y eficiencia.
-                </li>
-                <li className="flex items-center gap-3 rounded-3xl bg-gray-50 p-4">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">2</span>
-                  Interfaz accesible diseñada para usuarios no técnicos.
-                </li>
-                <li className="flex items-center gap-3 rounded-3xl bg-gray-50 p-4">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-100 text-amber-600">3</span>
-                  Gráficos embebidos con datos reales de ThingSpeak.
-                </li>
-              </ul>
             </div>
           </aside>
         </section>
