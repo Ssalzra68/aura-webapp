@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Aura IoT",
   description: "Portal de control para soluciones IoT con Supabase y ThingSpeak.",
+  icons: {
+    icon: "/AURA.png",
+  },
 };
 
 export default function RootLayout({
@@ -24,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${geistSans.variable} ${geistMono.variable} min-h-full`}>
-      <body className="min-h-full bg-slate-950 text-slate-100">{children}</body>
+      <body className="min-h-full bg-white text-gray-900">{children}</body>
     </html>
   );
 }

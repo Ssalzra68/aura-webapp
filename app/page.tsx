@@ -1,15 +1,29 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-white px-6 py-12 text-gray-900 sm:px-10 lg:px-16">
       <div className="mx-auto max-w-7xl space-y-16">
-        {/* Encabezado */}
+        {/* Encabezado con Logo */}
         <header className="mb-12 text-center">
-          <div className="inline-flex rounded-full bg-cyan-100 px-4 py-2 mb-6">
-            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-700">
-              Solución IoT Inteligente
-            </span>
+          <div className="flex flex-col items-center gap-4 mb-6">
+            <div className="relative h-16 w-16">
+              <Image
+                src="/AURA.png"
+                alt="AURA Logo"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <div className="space-y-1">
+              <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
+                AURA
+              </h1>
+              <p className="text-sm text-gray-600 uppercase tracking-[0.3em] font-medium">
+                Adaptive Unified Responsive Atmosphere
+              </p>
+            </div>
           </div>
         </header>
 
