@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: "Portal de control para soluciones IoT con Supabase y ThingSpeak.",
   icons: {
     icon: "/AURA.png",
+    shortcut: "/AURA.png",
+    apple: "/AURA.png",
   },
 };
 
