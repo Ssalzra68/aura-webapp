@@ -127,7 +127,7 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-3">
+              <div className="grid gap-4">
                 <iframe
                   title="Temperatura"
                   src="https://thingspeak.com/channels/9/charts/1?bgcolor=%23ffffff&color=%230070f3&dynamic=true"
