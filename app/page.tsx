@@ -17,10 +17,10 @@ export default function Home() {
               />
             </div>
             <div className="space-y-1">
-              <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
+              <h1 className="text-6xl font-extrabold text-gray-900 tracking-tight sm:text-7xl">
                 AURA
               </h1>
-              <p className="text-sm text-gray-600 uppercase tracking-[0.3em] font-medium">
+              <p className="text-sm sm:text-base text-gray-600 tracking-[0.04em] font-medium">
                 Adaptive Unified Responsive Atmosphere
               </p>
             </div>
