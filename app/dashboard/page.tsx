@@ -42,6 +42,14 @@ export default function DashboardPage() {
   return (
     <main className="min-h-screen bg-white px-6 py-8 text-gray-900 sm:px-10 lg:px-12">
       <div className="mx-auto max-w-7xl">
+        <section className="mb-8 rounded-[2rem] bg-gradient-to-r from-cyan-500 via-fuchsia-500 to-amber-400 p-8 text-white shadow-xl">
+          <p className="text-sm uppercase tracking-[0.3em] text-cyan-100">Bienvenido</p>
+          <h1 className="mt-4 text-4xl font-semibold">{userName ? `¡Hola, ${userName}!` : "¡Hola, bienvenido!"}</h1>
+          <p className="mt-3 max-w-3xl text-base leading-7 text-cyan-100/90">
+            Ahora puedes acceder rápidamente a tus datos ambientales y a los controles de tu espacio inteligente.
+          </p>
+        </section>
+
         <header className="mb-8 flex flex-col gap-6 rounded-[2rem] bg-gray-50 p-6 shadow-lg sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="mb-3 flex items-center gap-3">

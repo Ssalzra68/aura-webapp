@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { type FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -41,10 +42,9 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-white px-6 py-10 text-gray-900 sm:px-10 lg:px-16">
-      <div className="mb-8 flex items-center justify-between">
-        <Link href="/" className="inline-flex items-center gap-3 text-lg font-semibold text-amber-600 transition hover:text-amber-700">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-100 text-amber-700">A</span>
-          AURA
+      <div className="mb-8 flex items-center">
+        <Link href="/" aria-label="Volver al inicio" className="inline-flex items-center rounded-2xl transition hover:opacity-90">
+          <Image src="/AURA.png" alt="AURA logo" width={44} height={44} className="rounded-2xl" />
         </Link>
       </div>
       <div className="mx-auto max-w-3xl rounded-3xl border border-gray-200 bg-white p-8 shadow-lg">
