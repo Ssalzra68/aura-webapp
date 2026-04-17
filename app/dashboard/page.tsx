@@ -7,7 +7,6 @@ import { createSupabaseClient } from "@/lib/supabaseClient";
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -42,67 +41,22 @@ export default function DashboardPage() {
   return (
     <main className="min-h-screen bg-white px-6 py-8 text-gray-900 sm:px-10 lg:px-12">
       <div className="mx-auto max-w-7xl">
-        <section className="mb-8 rounded-[2rem] bg-gradient-to-r from-cyan-500 via-fuchsia-500 to-amber-400 p-8 text-white shadow-xl">
-          <p className="text-sm uppercase tracking-[0.3em] text-cyan-100">Bienvenido</p>
-          <h1 className="mt-4 text-4xl font-semibold">{userName ? `¡Hola, ${userName}!` : "¡Hola, bienvenido!"}</h1>
-          <p className="mt-3 max-w-3xl text-base leading-7 text-cyan-100/90">
-            Ahora puedes acceder rápidamente a tus datos ambientales y a los controles de tu espacio inteligente.
-          </p>
-        </section>
-
-        <header className="mb-8 flex flex-col gap-6 rounded-[2rem] bg-gray-50 p-6 shadow-lg sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-8 flex flex-col gap-4 rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div className="mb-3 flex items-center gap-3">
-              <div className="grid h-12 w-12 place-items-center rounded-3xl bg-cyan-100 text-cyan-600 ring-1 ring-cyan-200">
-                A
-              </div>
-              <div>
-                <p className="text-sm uppercase tracking-[0.25em] text-gray-500">Aura IoT</p>
-                <h1 className="text-3xl font-semibold text-gray-900">Panel de control ambiental</h1>
-              </div>
-            </div>
-            <p className="max-w-2xl text-sm leading-6 text-gray-600 sm:text-base">
-              Un tablero pensado para que la información crítica sea clara, visual y útil. Todo el flujo de datos es sencillo de entender y muestra solo lo necesario.
+            <p className="text-sm uppercase tracking-[0.3em] text-sky-700">Bienvenido</p>
+            <h1 className="mt-4 text-4xl font-semibold text-sky-900">{userName ? `¡Hola, ${userName}!` : "¡Hola, bienvenido!"}</h1>
+            <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+              Ahora puedes acceder rápidamente a tus datos ambientales y a los controles de tu espacio inteligente.
             </p>
           </div>
-
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setMenuOpen(!menuOpen)}
-                className="rounded-full border border-gray-300 bg-white p-2 text-gray-700 shadow-sm transition hover:bg-gray-100"
-              >
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                </svg>
-              </button>
-              {menuOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-2xl border border-gray-200 bg-white shadow-lg z-50">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMenuOpen(false);
-                    }}
-                    className="w-full px-4 py-3 text-left text-sm text-gray-700 transition hover:bg-gray-50 rounded-t-2xl"
-                  >
-                    Editar perfil
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMenuOpen(false);
-                      handleLogout();
-                    }}
-                    className="w-full px-4 py-3 text-left text-sm text-red-600 transition hover:bg-red-50 rounded-b-2xl border-t border-gray-100"
-                  >
-                    Cerrar sesión
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </header>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="shrink-0 rounded-3xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-700"
+          >
+            Cerrar sesión
+          </button>
+        </div>
 
         <section className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
           <div className="space-y-6">
