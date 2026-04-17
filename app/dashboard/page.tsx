@@ -71,16 +71,6 @@ export default function DashboardPage() {
                 <p className="mt-4 text-5xl font-semibold text-amber-600">500 lux</p>
                 <p className="mt-3 text-sm text-gray-600">Umbral recomendado 400 lux</p>
               </article>
-              <article className="rounded-3xl border border-gray-200 bg-white p-6 shadow-lg">
-                <p className="text-sm uppercase tracking-[0.25em] text-gray-500">Presencia</p>
-                <p className="mt-4 text-3xl font-semibold text-emerald-600">Detectada</p>
-                <p className="mt-3 text-sm text-gray-600">Modo adaptativo activado</p>
-              </article>
-              <article className="rounded-3xl border border-gray-200 bg-white p-6 shadow-lg">
-                <p className="text-sm uppercase tracking-[0.25em] text-gray-500">Actuadores</p>
-                <p className="mt-4 text-3xl font-semibold text-purple-600">Ventilación + Iluminación</p>
-                <p className="mt-3 text-sm text-gray-600">Estado: activo</p>
-              </article>
             </div>
 
             <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">
