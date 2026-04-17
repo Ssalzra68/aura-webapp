@@ -1,13 +1,37 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createSupabaseClient } from "@/lib/supabaseClient";
 
 export default function DashboardPage() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const supabase = createSupabaseClient();
+      const { data } = await supabase.auth.getUser();
+      const user = data?.user;
+
+      if (!user) {
+        return;
+      }
+
+      const meta = user.user_metadata as Record<string, unknown> | undefined;
+      const fullName =
+        (meta?.full_name as string) ||
+        (meta?.name as string) ||
+        user.email ||
+        "";
+
+      setUserName(fullName);
+    };
+
+    void fetchUser();
+  }, []);
 
   const handleLogout = async () => {
     const supabase = createSupabaseClient();
@@ -148,23 +172,13 @@ export default function DashboardPage() {
             </div>
 
             <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">
-              <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Ventilación</p>
-              <div className="flex flex-col items-center gap-4">
-                <div className="relative h-24 w-24">
-                  <Image
-                    src="/Ventilador.png"
-                    alt="Ventilador"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <div className="w-full text-center">
-                  <p className="text-sm text-gray-600">Estado actual</p>
-                  <p className="mt-1 text-2xl font-semibold text-cyan-600">Encendida</p>
-                </div>
-                <button className="w-full rounded-3xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-600">
-                  Control
-                </button>
+              <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Bienvenido</p>
+              <div className="rounded-[2rem] bg-gradient-to-r from-cyan-500 via-fuchsia-500 to-amber-400 p-6 text-white shadow-xl">
+                <p className="text-sm uppercase tracking-[0.3em] text-cyan-100">Tu espacio Aura</p>
+                <h2 className="mt-4 text-3xl font-semibold">{userName ? `¡Hola, ${userName}!` : "¡Hola, bienvenido!"}</h2>
+                <p className="mt-4 text-sm leading-6 text-cyan-100/90">
+                  Revisar tus datos ambientales ahora es más rápido y claro. Aquí podrás ver temperatura, iluminación y el estado de tus actuadores.
+                </p>
               </div>
             </div>
 

@@ -7,6 +7,7 @@ import { createSupabaseClient } from "@/lib/supabaseClient";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,6 +22,11 @@ export default function RegisterPage() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          full_name: name,
+        },
+      },
     });
 
     setLoading(false);
@@ -35,6 +41,12 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-white px-6 py-10 text-gray-900 sm:px-10 lg:px-16">
+      <div className="mb-8 flex items-center justify-between">
+        <Link href="/" className="inline-flex items-center gap-3 text-lg font-semibold text-amber-600 transition hover:text-amber-700">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-100 text-amber-700">A</span>
+          AURA
+        </Link>
+      </div>
       <div className="mx-auto max-w-3xl rounded-3xl border border-gray-200 bg-white p-8 shadow-lg">
         <div className="mb-10 flex flex-col gap-3 text-center">
           <span className="inline-flex items-center justify-center rounded-full bg-amber-100 px-4 py-1 text-xs uppercase tracking-[0.3em] text-amber-700 ring-1 ring-amber-200">
@@ -49,6 +61,18 @@ export default function RegisterPage() {
         </div>
 
         <form onSubmit={handleRegister} className="space-y-6">
+          <label className="block">
+            <span className="mb-2 block text-sm font-medium text-gray-700">Nombre completo</span>
+            <input
+              type="text"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-200"
+              placeholder="Ej. María Pérez"
+            />
+          </label>
+
           <label className="block">
             <span className="mb-2 block text-sm font-medium text-gray-700">Correo electrónico</span>
             <input

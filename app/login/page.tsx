@@ -35,6 +35,12 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-white px-6 py-10 text-gray-900 sm:px-10 lg:px-16">
+      <div className="mb-8 flex items-center justify-between">
+        <Link href="/" className="inline-flex items-center gap-3 text-lg font-semibold text-cyan-600 transition hover:text-cyan-700">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-100 text-cyan-700">A</span>
+          AURA
+        </Link>
+      </div>
       <div className="mx-auto max-w-3xl rounded-3xl border border-gray-200 bg-white p-8 shadow-lg">
         <div className="mb-10 flex flex-col gap-3 text-center">
           <span className="inline-flex items-center justify-center rounded-full bg-cyan-100 px-4 py-1 text-xs uppercase tracking-[0.3em] text-cyan-700 ring-1 ring-cyan-200">
