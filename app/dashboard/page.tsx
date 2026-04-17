@@ -58,26 +58,26 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        <section className="space-y-6">
+        <section className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
           <div className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-2">
-              <article className="rounded-3xl border border-gray-200 bg-white p-6 shadow-lg">
-                <p className="text-sm uppercase tracking-[0.25em] text-gray-500">Temperatura</p>
-                <p className="mt-4 text-5xl font-semibold text-cyan-600">22.0°C</p>
-                <p className="mt-3 text-sm text-gray-600">Umbral activo 25.0°C</p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <article className="rounded-3xl border border-gray-200 bg-white p-4 shadow-lg">
+                <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Temperatura</p>
+                <p className="mt-3 text-4xl font-semibold text-cyan-600">22.0°C</p>
+                <p className="mt-2 text-sm text-gray-600">Umbral activo 25.0°C</p>
               </article>
-              <article className="rounded-3xl border border-gray-200 bg-white p-6 shadow-lg">
-                <p className="text-sm uppercase tracking-[0.25em] text-gray-500">Iluminación</p>
-                <p className="mt-4 text-5xl font-semibold text-amber-600">500 lux</p>
-                <p className="mt-3 text-sm text-gray-600">Umbral recomendado 400 lux</p>
+              <article className="rounded-3xl border border-gray-200 bg-white p-4 shadow-lg">
+                <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Iluminación</p>
+                <p className="mt-3 text-4xl font-semibold text-amber-600">500 lux</p>
+                <p className="mt-2 text-sm text-gray-600">Umbral recomendado 400 lux</p>
               </article>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">
-                <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Ventilación</p>
-                <div className="flex flex-col items-center gap-4">
-                  <div className="relative h-24 w-24">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-3xl border border-gray-200 bg-white p-4 shadow-lg">
+                <p className="text-xs uppercase tracking-[0.3em] text-gray-500 mb-4">Ventilación</p>
+                <div className="flex flex-col items-center gap-3">
+                  <div className="relative h-20 w-20">
                     <Image
                       src="/Ventilador.png"
                       alt="Ventilador"
@@ -87,17 +87,17 @@ export default function DashboardPage() {
                   </div>
                   <div className="w-full text-center">
                     <p className="text-sm text-gray-600">Estado actual</p>
-                    <p className="mt-1 text-2xl font-semibold text-cyan-600">Encendida</p>
+                    <p className="mt-1 text-xl font-semibold text-cyan-600">Encendida</p>
                   </div>
-                  <button className="w-full rounded-3xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-600">
+                  <button className="w-full rounded-3xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan-600">
                     Control
                   </button>
                 </div>
               </div>
-              <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">
-                <p className="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Iluminación</p>
-                <div className="flex flex-col items-center gap-4">
-                  <div className="relative h-24 w-24">
+              <div className="rounded-3xl border border-gray-200 bg-white p-4 shadow-lg">
+                <p className="text-xs uppercase tracking-[0.3em] text-gray-500 mb-4">Iluminación</p>
+                <div className="flex flex-col items-center gap-3">
+                  <div className="relative h-20 w-20">
                     <Image
                       src="/Luz.png"
                       alt="Iluminación"
@@ -107,9 +107,9 @@ export default function DashboardPage() {
                   </div>
                   <div className="w-full text-center">
                     <p className="text-sm text-gray-600">Estado actual</p>
-                    <p className="mt-1 text-2xl font-semibold text-amber-600">Automática</p>
+                    <p className="mt-1 text-xl font-semibold text-amber-600">Automática</p>
                   </div>
-                  <button className="w-full rounded-3xl bg-amber-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-amber-600">
+                  <button className="w-full rounded-3xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600">
                     Control
                   </button>
                 </div>
@@ -147,20 +147,22 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">
-            <p className="text-sm uppercase tracking-[0.3em] text-gray-500">Setpoints activos</p>
-            <div className="mt-6 space-y-4">
-              <div className="rounded-3xl bg-gray-50 p-4">
-                <p className="text-sm text-gray-600">Temperatura objetivo</p>
-                <p className="mt-2 text-2xl font-semibold text-cyan-600">24°C</p>
-              </div>
-              <div className="rounded-3xl bg-gray-50 p-4">
-                <p className="text-sm text-gray-600">Iluminación objetivo</p>
-                <p className="mt-2 text-2xl font-semibold text-amber-600">420 lux</p>
-              </div>
-              <div className="rounded-3xl bg-gray-50 p-4">
-                <p className="text-sm text-gray-600">Modo</p>
-                <p className="mt-2 text-2xl font-semibold text-emerald-600">Adaptivo</p>
+          <div className="space-y-6">
+            <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">
+              <p className="text-sm uppercase tracking-[0.3em] text-gray-500">Setpoints activos</p>
+              <div className="mt-6 space-y-4">
+                <div className="rounded-3xl bg-gray-50 p-4">
+                  <p className="text-sm text-gray-600">Temperatura objetivo</p>
+                  <p className="mt-2 text-2xl font-semibold text-cyan-600">24°C</p>
+                </div>
+                <div className="rounded-3xl bg-gray-50 p-4">
+                  <p className="text-sm text-gray-600">Iluminación objetivo</p>
+                  <p className="mt-2 text-2xl font-semibold text-amber-600">420 lux</p>
+                </div>
+                <div className="rounded-3xl bg-gray-50 p-4">
+                  <p className="text-sm text-gray-600">Modo</p>
+                  <p className="mt-2 text-2xl font-semibold text-emerald-600">Adaptivo</p>
+                </div>
               </div>
             </div>
           </div>
