@@ -138,12 +138,7 @@ export default function DashboardPage() {
                   src="https://thingspeak.com/channels/9/charts/2?bgcolor=%23ffffff&color=%23f59e0b&dynamic=true"
                   className="h-60 w-full rounded-3xl border border-gray-200 bg-white"
                 />
-                <iframe
-                  title="Presencia"
-                  src="https://thingspeak.com/channels/9/charts/3?bgcolor=%23ffffff&color=%233cb371&dynamic=true"
-                  className="h-60 w-full rounded-3xl border border-gray-200 bg-white"
-                />
-              </div>
+                </div>
             </div>
           </div>
 
