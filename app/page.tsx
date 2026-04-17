@@ -17,7 +17,7 @@ export default function Home() {
               />
             </div>
             <div className="space-y-1">
-              <h1 className="text-6xl font-extrabold text-cyan-700 tracking-tight sm:text-7xl sm:tracking-tight">
+              <h1 className="text-6xl font-extrabold text-cyan-700 tracking-tight sm:text-7xl sm:tracking-tight" font-rounded>
                 AURA
               </h1>
               <p className="text-sm sm:text-base text-slate-600 tracking-[0.03em] font-medium">
