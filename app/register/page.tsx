@@ -98,16 +98,7 @@ export default function RegisterPage() {
             />
           </label>
 
-          {message ? (
-            <p className="rounded-2xl border border-rose-300 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-              {message}
-            </p>
-          ) : (
-            <p className="rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-600">
-              Recibirás un correo de confirmación si tu proveedor de Supabase lo requiere.
-            </p>
-          )}
-
+        
           <button
             type="submit"
             disabled={loading}
