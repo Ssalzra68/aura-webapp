@@ -19,10 +19,23 @@ export default function LoginPage() {
   const [forgotEmail, setForgotEmail] = useState("");
   const [forgotLoading, setForgotLoading] = useState(false);
 
+  // Validar formato de correo
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isValidEmail = emailRegex.test(email);
+  const isValidForgotEmail = emailRegex.test(forgotEmail);
+
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
     setMessage(null);
+
+    if (!isValidEmail) {
+      setMessageType("error");
+      setMessage("Por favor ingresa un correo electrónico válido (debe contener @).");
+      setLoading(false);
+      return;
+    }
+
     const supabase = createSupabaseClient();
 
     const { error } = await supabase.auth.signInWithPassword({
@@ -66,6 +79,13 @@ export default function LoginPage() {
     event.preventDefault();
     setForgotLoading(true);
     setMessage(null);
+
+    if (!isValidForgotEmail) {
+      setMessageType("error");
+      setMessage("Por favor ingresa un correo electrónico válido (debe contener @).");
+      setForgotLoading(false);
+      return;
+    }
 
     const supabase = createSupabaseClient();
 
@@ -123,9 +143,17 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+                  title="Por favor ingresa un correo electrónico válido (debe contener @)"
                   className="w-full rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200"
                   placeholder="usuario@ejemplo.com"
                 />
+                {email && !isValidEmail && (
+                  <p className="mt-1 text-xs text-rose-600">⚠️ El correo debe contener @</p>
+                )}
+                {email && isValidEmail && (
+                  <p className="mt-1 text-xs text-emerald-600">✓ Correo válido</p>
+                )}
               </label>
 
               <label className="block">
@@ -172,7 +200,7 @@ export default function LoginPage() {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || !isValidEmail}
                 className="inline-flex w-full items-center justify-center rounded-2xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-600 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {loading ? "Conectando…" : "Iniciar sesión"}
@@ -222,9 +250,17 @@ export default function LoginPage() {
                 required
                 value={forgotEmail}
                 onChange={(e) => setForgotEmail(e.target.value)}
+                pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+                title="Por favor ingresa un correo electrónico válido (debe contener @)"
                 className="w-full rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200"
                 placeholder="usuario@ejemplo.com"
               />
+              {forgotEmail && !isValidForgotEmail && (
+                <p className="mt-1 text-xs text-rose-600">⚠️ El correo debe contener @</p>
+              )}
+              {forgotEmail && isValidForgotEmail && (
+                <p className="mt-1 text-xs text-emerald-600">✓ Correo válido</p>
+              )}
             </label>
 
             {message ? (
@@ -239,7 +275,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              disabled={forgotLoading}
+              disabled={forgotLoading || !isValidForgotEmail}
               className="inline-flex w-full items-center justify-center rounded-2xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-600 disabled:cursor-not-allowed disabled:opacity-70"
             >
               {forgotLoading ? "Enviando…" : "Enviar enlace de recuperación"}
