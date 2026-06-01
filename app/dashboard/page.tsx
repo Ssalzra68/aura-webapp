@@ -145,14 +145,16 @@ export default function DashboardPage() {
                             <div className="grid gap-4">
                                 <ThingSpeakChart
                                     title="Temperatura"
-                                    field={2}
+                                    field={1}
                                     unit="°C"
+                                    refreshMs={15000}
                                 />
 
                                 <ThingSpeakChart
                                     title="Iluminación"
-                                    field={3}
+                                    field={2}
                                     unit="lux"
+                                    refreshMs={15000}
                                 />
                             </div>
                         </div>
