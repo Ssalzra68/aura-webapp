@@ -91,7 +91,7 @@ export default function LoginPage() {
             className="inline-flex w-full items-center justify-center rounded-2xl bg-cyan-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-cyan-600 disabled:cursor-not-allowed disabled:opacity-70"
           >
             {loading ? "Conectando…" : "Iniciar sesión"}
-          </button>
+                  </button>
         </form>
 
         <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-gray-200 pt-6 text-sm text-gray-600 sm:flex-row">
