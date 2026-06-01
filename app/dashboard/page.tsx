@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createSupabaseClient } from "@/lib/supabaseClient";
+import ThingSpeakChart from "@/components/ThingSpeakChart";
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -142,15 +143,16 @@ export default function DashboardPage() {
                             </div>
 
                             <div className="grid gap-4">
-                                <iframe
-                                    title="Gráfica de temperatura ThingSpeak"
-                                    src="https://thingspeak.com/channels/3343086/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line"
-                                    className="h-[260px] w-full rounded-3xl border border-gray-200 bg-white"
+                                <ThingSpeakChart
+                                    title="Temperatura"
+                                    field={2}
+                                    unit="°C"
                                 />
-                                <iframe
+
+                                <ThingSpeakChart
                                     title="Iluminación"
-                                    src="https://thingspeak.com/channels/9/charts/2?bgcolor=%23ffffff&color=%23f59e0b&dynamic=true"
-                                    className="h-60 w-full rounded-3xl border border-gray-200 bg-white"
+                                    field={3}
+                                    unit="lux"
                                 />
                             </div>
                         </div>
