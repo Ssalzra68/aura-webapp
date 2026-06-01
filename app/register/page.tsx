@@ -5,7 +5,59 @@ import { type FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createSupabaseClient } from "@/lib/supabaseClient";
-import { validatePasswordStrength } from "@/lib/utils/passwordValidation";
+
+interface PasswordStrength {
+  score: number;
+  isValid: boolean;
+  feedback: string[];
+}
+
+function validatePasswordStrength(password: string): PasswordStrength {
+  const feedback: string[] = [];
+  let score = 0;
+
+  if (password.length >= 8) {
+    score += 1;
+  } else {
+    feedback.push("Mínimo 8 caracteres");
+  }
+
+  if (password.length >= 12) {
+    score += 1;
+  } else if (password.length >= 8) {
+    feedback.push("Se recomienda 12 o más caracteres");
+  }
+
+  if (/[a-z]/.test(password)) {
+    score += 1;
+  } else {
+    feedback.push("Incluye letras minúsculas");
+  }
+
+  if (/[A-Z]/.test(password)) {
+    score += 1;
+  } else {
+    feedback.push("Incluye letras mayúsculas");
+  }
+
+  if (/[0-9]/.test(password)) {
+    score += 1;
+  } else {
+    feedback.push("Incluye números");
+  }
+
+  if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+    score += 1;
+  } else {
+    feedback.push("Incluye caracteres especiales (!@#$%^&* etc.)");
+  }
+
+  return {
+    score,
+    isValid: score >= 4,
+    feedback,
+  };
+}
 
 export default function RegisterPage() {
     const router = useRouter();
