@@ -9,24 +9,43 @@ export default function AuthCallback() {
 
     useEffect(() => {
         const handleCallback = async () => {
+            const supabase = createSupabaseClient();
+
             try {
-                const supabase = createSupabaseClient();
-                const { data, error } = await supabase.auth.getSession();
+                const url = new URL(window.location.href);
+                const code = url.searchParams.get("code");
+                const next = url.searchParams.get("next") ?? "/dashboard";
+
+                if (code) {
+                    const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+                    if (error) {
+                        console.error("Error al intercambiar el codigo:", error.message);
+                        router.replace("/login?error=auth_failed");
+                        return;
+                    }
+                }
+
+                const {
+                    data: { session },
+                    error,
+                } = await supabase.auth.getSession();
 
                 if (error) {
-                    console.error("Error de autenticación:", error);
-                    router.push("/login?error=auth_failed");
+                    console.error("Error al obtener la sesion:", error.message);
+                    router.replace("/login?error=auth_failed");
                     return;
                 }
 
-                if (data?.session) {
-                    router.push("/dashboard");
-                } else {
-                    router.push("/login");
+                if (!session) {
+                    router.replace("/login?error=no_session");
+                    return;
                 }
+
+                router.replace(next);
             } catch (error) {
                 console.error("Error en callback:", error);
-                router.push("/login?error=callback_error");
+                router.replace("/login?error=callback_error");
             }
         };
 
@@ -34,11 +53,15 @@ export default function AuthCallback() {
     }, [router]);
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-white">
+        <div className="flex min-h-screen items-center justify-center bg-white">
             <div className="text-center">
-                <div className="inline-flex h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-cyan-500 mb-4"></div>
-                <p className="text-gray-600 text-sm font-medium">Procesando autenticación con Google...</p>
-                <p className="text-gray-400 text-xs mt-2">Por favor espera, estamos configurando tu sesión.</p>
+                <div className="mb-4 inline-flex h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-cyan-500" />
+                <p className="text-sm font-medium text-gray-600">
+                    Procesando autenticacion con Google...
+                </p>
+                <p className="mt-2 text-xs text-gray-400">
+                    Por favor espera, estamos configurando tu sesion.
+                </p>
             </div>
         </div>
     );
