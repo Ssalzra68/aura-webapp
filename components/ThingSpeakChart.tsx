@@ -26,6 +26,7 @@ type ThingSpeakChartProps = {
     field: number;
     unit?: string;
     refreshMs?: number;
+    results?: number;
     onLatestValue?: (value: number | null) => void;
 };
 
@@ -34,6 +35,7 @@ export default function ThingSpeakChart({
     field,
     unit = "",
     refreshMs = 15000,
+    results = 60,
     onLatestValue,
 }: ThingSpeakChartProps) {
     const [data, setData] = useState<ChartPoint[]>([]);
@@ -89,7 +91,7 @@ export default function ThingSpeakChart({
         return () => {
             window.clearInterval(intervalId);
         };
-    }, [field, refreshMs]);
+    }, [field, refreshMs, results, onLatestValue]);
 
     return (
         <div className="h-[320px] w-full rounded-3xl border border-gray-200 bg-white p-4 shadow-sm">

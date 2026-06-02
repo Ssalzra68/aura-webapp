@@ -37,6 +37,7 @@ export default function DashboardPage() {
     const [latestLight, setLatestLight] = useState<number | null>(null);
     const [presenceDetected, setPresenceDetected] = useState<boolean | null>(null);
     const [presenceAverage, setPresenceAverage] = useState<number | null>(null);
+    const [selectedTimeRange, setSelectedTimeRange] = useState("24h");
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -194,6 +195,32 @@ export default function DashboardPage() {
             [deviceId]: data,
         }));
     };
+    const timeRangeOptions = [
+        {
+            value: "1h",
+            label: "\u00daltima hora",
+            results: 180,
+        },
+        {
+            value: "6h",
+            label: "\u00daltimas 6 horas",
+            results: 1080,
+        },
+        {
+            value: "12h",
+            label: "\u00daltimas 12 horas",
+            results: 2160,
+        },
+        {
+            value: "24h",
+            label: "\u00daltimas 24 horas",
+            results: 4320,
+        },
+    ];
+
+    const selectedRange =
+        timeRangeOptions.find((option) => option.value === selectedTimeRange) ??
+        timeRangeOptions[3];
     const profileOptions: {
         value: DeviceProfile;
         label: string;
@@ -385,9 +412,17 @@ export default function DashboardPage() {
                                     <p className="text-sm uppercase tracking-[0.3em] text-gray-500">Historial ambiental</p>
                                     <h2 className="mt-2 text-2xl font-semibold text-gray-900">Datos de las últimas 24 horas</h2>
                                 </div>
-                                <div className="rounded-full border border-gray-300 bg-gray-50 px-4 py-2 text-sm text-gray-700">
-                                    Past 24 hours ▼
-                                </div>
+                                <select
+                                    value={selectedTimeRange}
+                                    onChange={(e) => setSelectedTimeRange(e.target.value)}
+                                    className="rounded-full border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 outline-none transition hover:bg-gray-100 focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+                                >
+                                    {timeRangeOptions.map((option) => (
+                                        <option key={option.value} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
 
                             <div className="grid gap-4">
@@ -396,16 +431,18 @@ export default function DashboardPage() {
                                     field={2}
                                     unit="°C"
                                     refreshMs={20000}
+                                    results={selectedRange.results}
                                     onLatestValue={setLatestTemperature}
                                 />
 
                                 <ThingSpeakChart
-                                    title="Iluminación"
-                                    field={3}
-                                    unit="lux"
-                                    refreshMs={20000}
-                                    onLatestValue={setLatestLight}
-                                />
+                                    title="Iluminaci{" \u00f3"}n"
+                                field={3}
+                                unit="lux"
+                                refreshMs={20000}
+                                results={selectedRange.results}
+                                onLatestValue={setLatestLight}
+/>
                             </div>
 
                             <ThingSpeakLatestTable
