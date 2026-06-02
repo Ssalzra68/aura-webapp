@@ -34,6 +34,7 @@ export default function ThingSpeakChart({
     field,
     unit = "",
     refreshMs = 15000,
+    onLatestValue,
 }: ThingSpeakChartProps) {
     const [data, setData] = useState<ChartPoint[]>([]);
     const [loading, setLoading] = useState(true);
@@ -51,12 +52,17 @@ export default function ThingSpeakChart({
 
                 const json = await response.json();
 
-                const points = json.feeds
+                const points: ChartPoint[] = json.feeds
                     .map((feed: Feed) => {
                         const rawValue = feed[`field${field}`];
+                        const date = new Date(feed.created_at);
 
                         return {
-                            time: new Date(feed.created_at).toLocaleTimeString(),
+                            time: date.toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                            }),
+                            fullTime: date.toLocaleString(),
                             value: Number(rawValue),
                         };
                     })
@@ -64,6 +70,9 @@ export default function ThingSpeakChart({
 
                 setData(points);
                 setLastUpdate(new Date().toLocaleTimeString());
+
+                const latestPoint = points[points.length - 1];
+                onLatestValue?.(latestPoint ? latestPoint.value : null);
             } catch (error) {
                 console.error("Error leyendo ThingSpeak:", error);
             } finally {

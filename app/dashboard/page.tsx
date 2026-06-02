@@ -170,6 +170,7 @@ export default function DashboardPage() {
                                     onLatestValue={setLatestLight}
                                 />
                             </div>
+
                             <ThingSpeakLatestTable
                                 refreshMs={15000}
                                 fields={[
