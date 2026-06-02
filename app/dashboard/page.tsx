@@ -6,11 +6,30 @@ import { useRouter } from "next/navigation";
 import { createSupabaseClient } from "@/lib/supabaseClient";
 import ThingSpeakChart from "@/components/ThingSpeakChart";
 import ThingSpeakLatestTable from "@/components/ThingSpeakLatestTable";
+import DeviceControlCard from "@/components/DeviceControlCard";
 
 export default function DashboardPage() {
     const router = useRouter();
     const [userName, setUserName] = useState("");
     const [loadingUser, setLoadingUser] = useState(true);
+    type DeviceMode = "auto" | "manual";
+
+    type DeviceControl = {
+        device_id: "fan" | "light";
+        label: string;
+        mode: DeviceMode;
+        manual_state: boolean;
+    };
+
+    const [controls, setControls] = useState<{
+        fan: DeviceControl | null;
+        light: DeviceControl | null;
+    }>({
+        fan: null,
+        light: null,
+    });
+
+    const [savingDevice, setSavingDevice] = useState<"fan" | "light" | null>(null);
     const [latestTemperature, setLatestTemperature] = useState<number | null>(null);
     const [latestLight, setLatestLight] = useState<number | null>(null);
     const [presenceDetected, setPresenceDetected] = useState<boolean | null>(null);
@@ -100,6 +119,32 @@ export default function DashboardPage() {
         };
     }, []);
 
+    useEffect(() => {
+        const loadControls = async () => {
+            const supabase = createSupabaseClient();
+
+            const { data, error } = await supabase
+                .from("device_controls")
+                .select("*")
+                .in("device_id", ["fan", "light"]);
+
+            if (error) {
+                console.error("Error cargando controles:", error.message);
+                return;
+            }
+
+            const fan = data.find((item) => item.device_id === "fan") ?? null;
+            const light = data.find((item) => item.device_id === "light") ?? null;
+
+            setControls({
+                fan,
+                light,
+            });
+        };
+
+        void loadControls();
+    }, []);
+
     if (loadingUser) {
         return (
             <main className="min-h-screen flex items-center justify-center bg-white text-gray-900">
@@ -114,6 +159,37 @@ export default function DashboardPage() {
         const supabase = createSupabaseClient();
         await supabase.auth.signOut();
         router.push("/login");
+    };
+
+    const updateDeviceControl = async (
+        deviceId: "fan" | "light",
+        changes: Partial<Pick<DeviceControl, "mode" | "manual_state">>
+    ) => {
+        setSavingDevice(deviceId);
+
+        const supabase = createSupabaseClient();
+
+        const { data, error } = await supabase
+            .from("device_controls")
+            .update({
+                ...changes,
+                updated_at: new Date().toISOString(),
+            })
+            .eq("device_id", deviceId)
+            .select()
+            .single();
+
+        setSavingDevice(null);
+
+        if (error) {
+            console.error("Error enviando comando:", error.message);
+            return;
+        }
+
+        setControls((prev) => ({
+            ...prev,
+            [deviceId]: data,
+        }));
     };
 
     return (
@@ -183,48 +259,59 @@ export default function DashboardPage() {
                             </article>
                         </div>
 
-                        <div className="grid gap-4 sm:grid-cols-2">
-                            <div className="rounded-3xl border border-gray-200 bg-white p-4 shadow-lg">
-                                <p className="text-xs uppercase tracking-[0.3em] text-gray-500 mb-4">Ventilación</p>
-                                <div className="flex flex-col items-center gap-3">
-                                    <div className="relative h-20 w-20">
-                                        <Image
-                                            src="/Ventilador.png"
-                                            alt="Ventilador"
-                                            fill
-                                            className="object-contain"
-                                        />
-                                    </div>
-                                    <div className="w-full text-center">
-                                        <p className="text-sm text-gray-600">Estado actual</p>
-                                        <p className="mt-1 text-xl font-semibold text-cyan-600">Encendida</p>
-                                    </div>
-                                    <button className="w-full rounded-3xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan-600">
-                                        Control
-                                    </button>
-                                </div>
+                        <section className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">
+                            <div className="mb-6">
+                                <p className="text-sm uppercase tracking-[0.3em] text-gray-500">
+                                    Control de actuadores
+                                </p>
+                                <h2 className="mt-2 text-2xl font-semibold text-gray-900">
+                                    Modo de operacion del sistema
+                                </h2>
+                                <p className="mt-2 text-sm text-gray-600">
+                                    En modo automatico, la Raspberry controla el actuador usando los
+                                    umbrales locales. En modo manual, el usuario puede encenderlo o
+                                    apagarlo desde el dashboard.
+                                </p>
                             </div>
-                            <div className="rounded-3xl border border-gray-200 bg-white p-4 shadow-lg">
-                                <p className="text-xs uppercase tracking-[0.3em] text-gray-500 mb-4">Iluminación</p>
-                                <div className="flex flex-col items-center gap-3">
-                                    <div className="relative h-20 w-20">
-                                        <Image
-                                            src="/Luz.png"
-                                            alt="Iluminación"
-                                            fill
-                                            className="object-contain"
-                                        />
-                                    </div>
-                                    <div className="w-full text-center">
-                                        <p className="text-sm text-gray-600">Estado actual</p>
-                                        <p className="mt-1 text-xl font-semibold text-amber-600">Automática</p>
-                                    </div>
-                                    <button className="w-full rounded-3xl bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-600">
-                                        Control
-                                    </button>
-                                </div>
+
+                            <div className="grid gap-4 lg:grid-cols-2">
+                                <DeviceControlCard
+                                    title="Ventilacion"
+                                    imageSrc="/Ventilador.png"
+                                    variant="fan"
+                                    mode={controls.fan?.mode ?? "auto"}
+                                    manualState={controls.fan?.manual_state ?? false}
+                                    saving={savingDevice === "fan"}
+                                    onModeChange={(mode) =>
+                                        updateDeviceControl("fan", { mode })
+                                    }
+                                    onManualStateChange={(state) =>
+                                        updateDeviceControl("fan", {
+                                            mode: "manual",
+                                            manual_state: state,
+                                        })
+                                    }
+                                />
+
+                                <DeviceControlCard
+                                    title="Iluminacion"
+                                    imageSrc="/Luz.png"
+                                    variant="light"
+                                    mode={controls.light?.mode ?? "auto"}
+                                    manualState={controls.light?.manual_state ?? false}
+                                    saving={savingDevice === "light"}
+                                    onModeChange={(mode) =>
+                                        updateDeviceControl("light", { mode })
+                                    }
+                                    onManualStateChange={(state) =>
+                                        updateDeviceControl("light", {
+                                            mode: "manual",
+                                            manual_state: state,
+                                        })
+                                    }
+                                />
                             </div>
-                        </div>
+                        </section>
 
                         <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">
                             <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
