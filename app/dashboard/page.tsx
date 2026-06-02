@@ -81,12 +81,20 @@ export default function DashboardPage() {
                         <div className="grid gap-4 sm:grid-cols-2">
                             <article className="rounded-3xl border border-gray-200 bg-white p-4 shadow-lg">
                                 <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Temperatura</p>
-                                <p className="mt-3 text-4xl font-semibold text-cyan-600">22.0°C</p>
+                                <p className="mt-3 text-4xl font-semibold text-cyan-600">
+                                    {latestTemperature !== null
+                                        ? `${latestTemperature.toFixed(1)}°C`
+                                        : "-- °C"}
+                                </p>
                                 <p className="mt-2 text-sm text-gray-600">Umbral activo 25.0°C</p>
                             </article>
                             <article className="rounded-3xl border border-gray-200 bg-white p-4 shadow-lg">
                                 <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Iluminación</p>
-                                <p className="mt-3 text-4xl font-semibold text-amber-600">500 lux</p>
+                                <p className="mt-3 text-4xl font-semibold text-amber-600">
+                                    {latestLight !== null
+                                        ? `${latestLight.toFixed(0)} lux`
+                                        : "-- lux"}
+                                </p>
                                 <p className="mt-2 text-sm text-gray-600">Umbral recomendado 400 lux</p>
                             </article>
                         </div>

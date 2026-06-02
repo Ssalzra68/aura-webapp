@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
-    const field = searchParams.get("field") ?? "1";
+    const field = searchParams.get("field");
     const results = searchParams.get("results") ?? "60";
 
     const channelId = process.env.THINGSPEAK_CHANNEL_ID;
@@ -16,9 +19,10 @@ export async function GET(request: Request) {
         );
     }
 
-    const url = new URL(
-        `https://api.thingspeak.com/channels/${channelId}/fields/${field}.json`
-    );
+    const url =
+        field && field !== "all"
+            ? new URL(`https://api.thingspeak.com/channels/${channelId}/fields/${field}.json`)
+            : new URL(`https://api.thingspeak.com/channels/${channelId}/feeds.json`);
 
     url.searchParams.set("api_key", apiKey);
     url.searchParams.set("results", results);

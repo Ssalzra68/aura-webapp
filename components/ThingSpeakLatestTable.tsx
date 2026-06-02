@@ -73,7 +73,7 @@ export default function ThingSpeakLatestTable({
                         Lecturas recientes
                     </p>
                     <h2 className="mt-2 text-2xl font-semibold text-gray-900">
-                        Últimos 10 datos registrados
+                        Ultimos 10 datos registrados
                     </h2>
                 </div>
 
@@ -135,9 +135,12 @@ export default function ThingSpeakLatestTable({
                                                     key={field.key}
                                                     className="px-4 py-3 text-gray-700"
                                                 >
-                                                    {rawValue === null || rawValue === undefined || Number.isNaN(value)
+                                                    {rawValue === null ||
+                                                        rawValue === undefined ||
+                                                        Number.isNaN(value)
                                                         ? "--"
-                                                        : `${value.toFixed(2)} ${field.unit ?? ""}`}
+                                                        : `${value.toFixed(2)} ${field.unit ?? ""
+                                                        }`}
                                                 </td>
                                             );
                                         })}
