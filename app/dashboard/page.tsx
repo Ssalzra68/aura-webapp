@@ -194,6 +194,32 @@ export default function DashboardPage() {
             [deviceId]: data,
         }));
     };
+    const profileOptions: {
+        value: DeviceProfile;
+        label: string;
+        description: string;
+    }[] = [
+            {
+                value: "STUDY",
+                label: "Estudio",
+                description: "Luz fria y mayor intensidad.",
+            },
+            {
+                value: "WORK",
+                label: "Trabajo",
+                description: "Luz neutra para concentracion.",
+            },
+            {
+                value: "CHILL",
+                label: "Relajacion",
+                description: "Luz calida e intensidad media.",
+            },
+            {
+                value: "MUSIC",
+                label: "Musica",
+                description: "Luz calida e intensidad baja.",
+            },
+        ];
 
     return (
         <main className="min-h-screen bg-white px-6 py-8 text-gray-900 sm:px-10 lg:px-12">
@@ -305,20 +331,50 @@ export default function DashboardPage() {
                                         Este perfil se usa cuando el bombillo est{"\u00e1"} en modo autom{"\u00e1"}tico.
                                     </p>
 
-                                    <select
-                                        value={controls.light?.profile ?? "STUDY"}
-                                        onChange={(e) =>
-                                            updateDeviceControl("light", {
-                                                profile: e.target.value as DeviceProfile,
-                                            })
-                                        }
-                                        className="mt-3 w-full rounded-2xl border border-amber-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-200"
-                                    >
-                                        <option value="STUDY">Estudio</option>
-                                        <option value="WORK">Trabajo</option>
-                                        <option value="CHILL">Relajaci{"\u00f3"}n</option>
-                                        <option value="MUSIC">M{"\u00fa"}sica</option>
-                                    </select>
+                                    <div className="mt-5 space-y-3">
+                                        {profileOptions.map((profile) => {
+                                            const isSelected =
+                                                (controls.light?.profile ?? "STUDY") === profile.value;
+
+                                            return (
+                                                <button
+                                                    key={profile.value}
+                                                    type="button"
+                                                    disabled={savingDevice === "light"}
+                                                    onClick={() =>
+                                                        updateDeviceControl("light", {
+                                                            profile: profile.value,
+                                                        })
+                                                    }
+                                                    className={`w-full rounded-2xl border px-4 py-4 text-left transition ${isSelected
+                                                            ? "border-amber-500 bg-amber-500 text-white shadow-md"
+                                                            : "border-amber-200 bg-white text-gray-700 hover:border-amber-400 hover:bg-amber-100"
+                                                        }`}
+                                                >
+                                                    <div className="flex items-center justify-between gap-3">
+                                                        <div>
+                                                            <p className="text-base font-semibold">
+                                                                {profile.label}
+                                                            </p>
+
+                                                            <p
+                                                                className={`mt-1 text-sm ${isSelected ? "text-amber-50" : "text-gray-500"
+                                                                    }`}
+                                                            >
+                                                                {profile.description}
+                                                            </p>
+                                                        </div>
+
+                                                        {isSelected && (
+                                                            <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold">
+                                                                Activo
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             </div>
                         </section>
