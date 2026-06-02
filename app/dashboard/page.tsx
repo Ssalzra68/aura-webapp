@@ -173,8 +173,8 @@ export default function DashboardPage() {
                             <ThingSpeakLatestTable
                                 refreshMs={15000}
                                 fields={[
-                                    { key: "field1", label: "Temperatura", unit: "°C" },
-                                    { key: "field2", label: "Iluminación", unit: "lux" },
+                                    { key: "field2", label: "Temperatura", unit: "°C" },
+                                    { key: "field3", label: "Iluminación", unit: "lux" },
                                 ]}
                             />
                         </div>
