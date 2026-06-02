@@ -236,30 +236,6 @@ export default function DashboardPage() {
                                 </p>
                                 <p className="mt-2 text-sm text-gray-600">Umbral recomendado 400 lux</p>
                             </article>
-                            <div className="mt-4 rounded-3xl border border-amber-200 bg-amber-50 p-4">
-                                <label className="block text-sm font-medium text-gray-700">
-                                    Perfil de iluminaci{"\u00f3"}n autom{"\u00e1"}tica
-                                </label>
-
-                                <p className="mt-1 text-xs text-gray-500">
-                                    Este perfil se usa cuando el bombillo est{"\u00e1"} en modo autom{"\u00e1"}tico.
-                                </p>
-
-                                <select
-                                    value={controls.light?.profile ?? "STUDY"}
-                                    onChange={(e) =>
-                                        updateDeviceControl("light", {
-                                            profile: e.target.value as DeviceProfile,
-                                        })
-                                    }
-                                    className="mt-3 w-full rounded-2xl border border-amber-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-200"
-                                >
-                                    <option value="STUDY">Estudio</option>
-                                    <option value="WORK">Trabajo</option>
-                                    <option value="CHILL">Relajaci{"\u00f3"}n</option>
-                                    <option value="MUSIC">M{"\u00fa"}sica</option>
-                                </select>
-                            </div>
                             <article className="rounded-3xl border border-gray-200 bg-white p-4 shadow-lg">
                                 <p className="text-xs uppercase tracking-[0.3em] text-gray-500">
                                     Presencia
@@ -317,6 +293,30 @@ export default function DashboardPage() {
                                         })
                                     }
                                 />
+                                <div className="mt-4 rounded-3xl border border-amber-200 bg-amber-50 p-4">
+                                    <label className="block text-sm font-medium text-gray-700">
+                                        Perfil de iluminaci{"\u00f3"}n autom{"\u00e1"}tica
+                                    </label>
+
+                                    <p className="mt-1 text-xs text-gray-500">
+                                        Este perfil se usa cuando el bombillo est{"\u00e1"} en modo autom{"\u00e1"}tico.
+                                    </p>
+
+                                    <select
+                                        value={controls.light?.profile ?? "STUDY"}
+                                        onChange={(e) =>
+                                            updateDeviceControl("light", {
+                                                profile: e.target.value as DeviceProfile,
+                                            })
+                                        }
+                                        className="mt-3 w-full rounded-2xl border border-amber-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-200"
+                                    >
+                                        <option value="STUDY">Estudio</option>
+                                        <option value="WORK">Trabajo</option>
+                                        <option value="CHILL">Relajaci{"\u00f3"}n</option>
+                                        <option value="MUSIC">M{"\u00fa"}sica</option>
+                                    </select>
+                                </div>
 
                                 <DeviceControlCard
                                     title="Iluminacion"
