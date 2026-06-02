@@ -46,7 +46,7 @@ export default function ThingSpeakChart({
         const loadData = async () => {
             try {
                 const response = await fetch(
-                    `/api/thingspeak?field=${field}&results=60&t=${Date.now()}`,
+                    `/api/thingspeak?field=${field}&results=${results}&t=${Date.now()}`,
                     {
                         cache: "no-store",
                     }
