@@ -14,11 +14,14 @@ export default function DashboardPage() {
     const [loadingUser, setLoadingUser] = useState(true);
     type DeviceMode = "auto" | "manual";
 
+    type DeviceProfile = "STUDY" | "WORK" | "CHILL" | "MUSIC";
+
     type DeviceControl = {
         device_id: "fan" | "light";
         label: string;
         mode: DeviceMode;
         manual_state: boolean;
+        profile?: DeviceProfile;
     };
 
     const [controls, setControls] = useState<{
@@ -163,7 +166,7 @@ export default function DashboardPage() {
 
     const updateDeviceControl = async (
         deviceId: "fan" | "light",
-        changes: Partial<Pick<DeviceControl, "mode" | "manual_state">>
+        changes: Partial<Pick<DeviceControl, "mode" | "manual_state" | "profile">>
     ) => {
         setSavingDevice(deviceId);
 
@@ -233,6 +236,30 @@ export default function DashboardPage() {
                                 </p>
                                 <p className="mt-2 text-sm text-gray-600">Umbral recomendado 400 lux</p>
                             </article>
+                            <div className="mt-4 rounded-3xl border border-amber-200 bg-amber-50 p-4">
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Perfil de iluminaci{"\u00f3"}n autom{"\u00e1"}tica
+                                </label>
+
+                                <p className="mt-1 text-xs text-gray-500">
+                                    Este perfil se usa cuando el bombillo est{"\u00e1"} en modo autom{"\u00e1"}tico.
+                                </p>
+
+                                <select
+                                    value={controls.light?.profile ?? "STUDY"}
+                                    onChange={(e) =>
+                                        updateDeviceControl("light", {
+                                            profile: e.target.value as DeviceProfile,
+                                        })
+                                    }
+                                    className="mt-3 w-full rounded-2xl border border-amber-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 outline-none transition focus:border-amber-500 focus:ring-2 focus:ring-amber-200"
+                                >
+                                    <option value="STUDY">Estudio</option>
+                                    <option value="WORK">Trabajo</option>
+                                    <option value="CHILL">Relajaci{"\u00f3"}n</option>
+                                    <option value="MUSIC">M{"\u00fa"}sica</option>
+                                </select>
+                            </div>
                             <article className="rounded-3xl border border-gray-200 bg-white p-4 shadow-lg">
                                 <p className="text-xs uppercase tracking-[0.3em] text-gray-500">
                                     Presencia
@@ -348,27 +375,6 @@ export default function DashboardPage() {
                                     { key: "field1", label: "Presencia", unit: "" },
                                 ]}
                             />
-                        </div>
-                    </div>
-
-
-                    <div className="space-y-6">
-                        <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">
-                            <p className="text-sm uppercase tracking-[0.3em] text-gray-500">Setpoints activos</p>
-                            <div className="mt-6 space-y-4">
-                                <div className="rounded-3xl bg-gray-50 p-4">
-                                    <p className="text-sm text-gray-600">Temperatura objetivo</p>
-                                    <p className="mt-2 text-2xl font-semibold text-cyan-600">24°C</p>
-                                </div>
-                                <div className="rounded-3xl bg-gray-50 p-4">
-                                    <p className="text-sm text-gray-600">Iluminación objetivo</p>
-                                    <p className="mt-2 text-2xl font-semibold text-amber-600">420 lux</p>
-                                </div>
-                                <div className="rounded-3xl bg-gray-50 p-4">
-                                    <p className="text-sm text-gray-600">Modo</p>
-                                    <p className="mt-2 text-2xl font-semibold text-emerald-600">Adaptivo</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>
