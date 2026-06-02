@@ -268,9 +268,7 @@ export default function DashboardPage() {
                                     Modo de operacion del sistema
                                 </h2>
                                 <p className="mt-2 text-sm text-gray-600">
-                                    En modo automatico, la Raspberry controla el actuador usando los
-                                    umbrales locales. En modo manual, el usuario puede encenderlo o
-                                    apagarlo desde el dashboard.
+                                    {"En modo autom\u00e1tico, la Raspberry controla el actuador usando los umbrales locales. En modo manual, el usuario puede encenderlo o apagarlo desde el dashboard."}
                                 </p>
                             </div>
 

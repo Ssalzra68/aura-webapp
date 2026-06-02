@@ -42,7 +42,7 @@ export default function DeviceControlCard({
                     </p>
 
                     <h3 className={`mt-3 text-2xl font-semibold ${accentText}`}>
-                        {mode === "auto" ? "Modo automatico" : "Modo manual"}
+                        {mode === "auto" ? "Modo autom\u00e1tico" : "Modo manual"}
                     </h3>
 
                     <p className="mt-2 text-sm text-gray-600">
@@ -70,7 +70,7 @@ export default function DeviceControlCard({
                         }`}
                 >
                     {mode === "auto"
-                        ? "Control automatico activo"
+                        ? "Control autom\u00e1tico activo"
                         : manualState
                             ? "Encendido"
                             : "Apagado"}
@@ -92,7 +92,7 @@ export default function DeviceControlCard({
                                 : "text-gray-600 hover:bg-white"
                             }`}
                     >
-                        Automatico
+                        {"Autom\u00e1tico"}
                     </button>
 
                     <button
