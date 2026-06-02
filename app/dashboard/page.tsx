@@ -276,23 +276,26 @@ export default function DashboardPage() {
                             </div>
 
                             <div className="grid gap-4 lg:grid-cols-2">
+                                                              
+
                                 <DeviceControlCard
-                                    title="Ventilacion"
-                                    imageSrc="/Ventilador.png"
-                                    variant="fan"
-                                    mode={controls.fan?.mode ?? "auto"}
-                                    manualState={controls.fan?.manual_state ?? false}
-                                    saving={savingDevice === "fan"}
+                                    title="Iluminacion"
+                                    imageSrc="/Luz.png"
+                                    variant="light"
+                                    mode={controls.light?.mode ?? "auto"}
+                                    manualState={controls.light?.manual_state ?? false}
+                                    saving={savingDevice === "light"}
                                     onModeChange={(mode) =>
-                                        updateDeviceControl("fan", { mode })
+                                        updateDeviceControl("light", { mode })
                                     }
                                     onManualStateChange={(state) =>
-                                        updateDeviceControl("fan", {
+                                        updateDeviceControl("light", {
                                             mode: "manual",
                                             manual_state: state,
                                         })
                                     }
                                 />
+
                                 <div className="mt-4 rounded-3xl border border-amber-200 bg-amber-50 p-4">
                                     <label className="block text-sm font-medium text-gray-700">
                                         Perfil de iluminaci{"\u00f3"}n autom{"\u00e1"}tica
@@ -317,24 +320,6 @@ export default function DashboardPage() {
                                         <option value="MUSIC">M{"\u00fa"}sica</option>
                                     </select>
                                 </div>
-
-                                <DeviceControlCard
-                                    title="Iluminacion"
-                                    imageSrc="/Luz.png"
-                                    variant="light"
-                                    mode={controls.light?.mode ?? "auto"}
-                                    manualState={controls.light?.manual_state ?? false}
-                                    saving={savingDevice === "light"}
-                                    onModeChange={(mode) =>
-                                        updateDeviceControl("light", { mode })
-                                    }
-                                    onManualStateChange={(state) =>
-                                        updateDeviceControl("light", {
-                                            mode: "manual",
-                                            manual_state: state,
-                                        })
-                                    }
-                                />
                             </div>
                         </section>
 
