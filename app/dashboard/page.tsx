@@ -436,7 +436,7 @@ export default function DashboardPage() {
                                 />
 
                                 <ThingSpeakChart
-                                    title={"Iluminaci \u00f3n"}
+                                    title={"Iluminaci\u00f3n"}
                                 field={3}
                                 unit="lux"
                                 refreshMs={20000}
