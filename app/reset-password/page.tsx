@@ -17,12 +17,12 @@ export default function ResetPasswordPage() {
         setMessage("");
 
         if (password.length < 6) {
-            setMessage("La contrasena debe tener al menos 6 caracteres.");
+            setMessage("La contraseña debe tener al menos 6 caracteres.");
             return;
         }
 
         if (password !== confirmPassword) {
-            setMessage("Las contrasenas no coinciden.");
+            setMessage("Las contraseñas no coinciden.");
             return;
         }
 
@@ -37,12 +37,12 @@ export default function ResetPasswordPage() {
         setLoading(false);
 
         if (error) {
-            console.error("Error actualizando contrasena:", error.message);
-            setMessage("No se pudo cambiar la contrasena.");
+            console.error("Error actualizando contraseña:", error.message);
+            setMessage("No se pudo cambiar la contraseña.");
             return;
         }
 
-        setMessage("Contrasena actualizada correctamente.");
+        setMessage("contraseña actualizada correctamente.");
 
         setTimeout(() => {
             router.push("/login");
@@ -56,37 +56,37 @@ export default function ResetPasswordPage() {
                 className="w-full max-w-md rounded-3xl border border-gray-200 bg-white p-8 shadow-lg"
             >
                 <h1 className="text-3xl font-semibold text-sky-900">
-                    Cambiar contrasena
+                    Cambiar contraseña
                 </h1>
 
                 <p className="mt-3 text-sm text-gray-600">
-                    Ingresa tu nueva contrasena para recuperar el acceso.
+                    Ingresa tu nueva contraseña para recuperar el acceso.
                 </p>
 
                 <div className="mt-6">
                     <label className="text-sm font-medium text-gray-700">
-                        Nueva contrasena
+                        Nueva contraseña
                     </label>
 
                     <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Nueva contrasena"
+                        placeholder="Nueva contraseña"
                         className="mt-2 w-full rounded-2xl border border-gray-300 px-4 py-3 text-gray-900 outline-none focus:border-sky-500"
                     />
                 </div>
 
                 <div className="mt-4">
                     <label className="text-sm font-medium text-gray-700">
-                        Confirmar contrasena
+                        Confirmar contraseña
                     </label>
 
                     <input
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        placeholder="Confirmar contrasena"
+                        placeholder="Confirmar contraseña"
                         className="mt-2 w-full rounded-2xl border border-gray-300 px-4 py-3 text-gray-900 outline-none focus:border-sky-500"
                     />
                 </div>
@@ -100,7 +100,7 @@ export default function ResetPasswordPage() {
                     disabled={loading}
                     className="mt-6 w-full rounded-3xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-700 disabled:opacity-60"
                 >
-                    {loading ? "Actualizando..." : "Actualizar contrasena"}
+                    {loading ? "Actualizando..." : "Actualizar contraseña"}
                 </button>
             </form>
         </main>
