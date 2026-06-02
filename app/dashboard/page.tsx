@@ -11,6 +11,8 @@ export default function DashboardPage() {
     const router = useRouter();
     const [userName, setUserName] = useState("");
     const [loadingUser, setLoadingUser] = useState(true);
+    const [latestTemperature, setLatestTemperature] = useState<number | null>(null);
+    const [latestLight, setLatestLight] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -146,7 +148,7 @@ export default function DashboardPage() {
                             <div className="grid gap-4">
                                 <ThingSpeakChart
                                     title="Temperatura"
-                                    field={1}
+                                    field={2}
                                     unit="°C"
                                     refreshMs={15000}
                                     onLatestValue={setLatestTemperature}
@@ -154,22 +156,22 @@ export default function DashboardPage() {
 
                                 <ThingSpeakChart
                                     title="Iluminación"
-                                    field={2}
+                                    field={3}
                                     unit="lux"
                                     refreshMs={15000}
                                     onLatestValue={setLatestLight}
                                 />
                             </div>
+                            <ThingSpeakLatestTable
+                                refreshMs={15000}
+                                fields={[
+                                    { key: "field1", label: "Temperatura", unit: "°C" },
+                                    { key: "field2", label: "Iluminación", unit: "lux" },
+                                ]}
+                            />
                         </div>
                     </div>
 
-                    <ThingSpeakLatestTable
-                        refreshMs={15000}
-                        fields={[
-                            { key: "field1", label: "Temperatura", unit: "°C" },
-                            { key: "field2", label: "Iluminación", unit: "lux" },
-                        ]}
-                    />
 
                     <div className="space-y-6">
                         <div className="rounded-[2rem] border border-gray-200 bg-white p-6 shadow-lg">

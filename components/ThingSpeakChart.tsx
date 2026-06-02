@@ -26,6 +26,7 @@ type ThingSpeakChartProps = {
     field: number;
     unit?: string;
     refreshMs?: number;
+    onLatestValue?: (value: number | null) => void;
 };
 
 export default function ThingSpeakChart({
