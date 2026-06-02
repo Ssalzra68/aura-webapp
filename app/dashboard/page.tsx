@@ -45,7 +45,7 @@ export default function DashboardPage() {
         const loadPresence = async () => {
             try {
                 const response = await fetch(
-                    `/api/thingspeak?field=1&results=10&t=${Date.now()}`,
+                    `/api/thingspeak?field=1&results=30&t=${Date.now()}`,
                     {
                         cache: "no-store",
                     }
@@ -53,22 +53,35 @@ export default function DashboardPage() {
 
                 const json = await response.json();
 
-                const values = json.feeds
-                    .map((feed: { field1?: string | null }) => Number(feed.field1))
-                    .filter((value: number) => !Number.isNaN(value));
+                const feeds = json.feeds ?? [];
 
-                if (values.length === 0) {
-                    setPresenceDetected(null);
+                const presenceHoldMs = 5 * 60 * 1000; // 5 minutos
+                const now = Date.now();
+
+                const detections = feeds
+                    .map((feed: { created_at: string; field1?: string | null }) => {
+                        return {
+                            time: new Date(feed.created_at).getTime(),
+                            value: Number(feed.field1),
+                        };
+                    })
+                    .filter(
+                        (point: { time: number; value: number }) =>
+                            !Number.isNaN(point.value) && point.value >= 1
+                    );
+
+                const latestDetection = detections.at(-1);
+
+                if (!latestDetection) {
+                    setPresenceDetected(false);
                     setPresenceAverage(null);
                     return;
                 }
 
-                const average =
-                    values.reduce((sum: number, value: number) => sum + value, 0) /
-                    values.length;
+                const timeSinceLastDetection = now - latestDetection.time;
 
-                setPresenceAverage(average);
-                setPresenceDetected(average >= 0.2);
+                setPresenceDetected(timeSinceLastDetection <= presenceHoldMs);
+                setPresenceAverage(latestDetection.value);
             } catch (error) {
                 console.error("Error leyendo presencia:", error);
                 setPresenceDetected(null);
@@ -165,9 +178,7 @@ export default function DashboardPage() {
                                 </p>
 
                                 <p className="mt-2 text-sm text-gray-600">
-                                    {presenceAverage !== null
-                                        ? `Promedio ultimos 10 datos: ${presenceAverage.toFixed(2)}`
-                                        : "Esperando lectura del sensor"}
+                                    Se mantiene activa si hubo deteccion en los ultimos 5 minutos
                                 </p>
                             </article>
                         </div>
