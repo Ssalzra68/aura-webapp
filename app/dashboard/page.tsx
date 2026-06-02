@@ -13,6 +13,8 @@ export default function DashboardPage() {
     const [loadingUser, setLoadingUser] = useState(true);
     const [latestTemperature, setLatestTemperature] = useState<number | null>(null);
     const [latestLight, setLatestLight] = useState<number | null>(null);
+    const [presenceDetected, setPresenceDetected] = useState<boolean | null>(null);
+    const [presenceAverage, setPresenceAverage] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -39,6 +41,51 @@ export default function DashboardPage() {
 
         void fetchUser();
     }, [router]);
+    useEffect(() => {
+        const loadPresence = async () => {
+            try {
+                const response = await fetch(
+                    `/api/thingspeak?field=1&results=10&t=${Date.now()}`,
+                    {
+                        cache: "no-store",
+                    }
+                );
+
+                const json = await response.json();
+
+                const values = json.feeds
+                    .map((feed: { field1?: string | null }) => Number(feed.field1))
+                    .filter((value: number) => !Number.isNaN(value));
+
+                if (values.length === 0) {
+                    setPresenceDetected(null);
+                    setPresenceAverage(null);
+                    return;
+                }
+
+                const average =
+                    values.reduce((sum: number, value: number) => sum + value, 0) /
+                    values.length;
+
+                setPresenceAverage(average);
+                setPresenceDetected(average >= 0.2);
+            } catch (error) {
+                console.error("Error leyendo presencia:", error);
+                setPresenceDetected(null);
+                setPresenceAverage(null);
+            }
+        };
+
+        void loadPresence();
+
+        const intervalId = window.setInterval(() => {
+            void loadPresence();
+        }, 15000);
+
+        return () => {
+            window.clearInterval(intervalId);
+        };
+    }, []);
 
     if (loadingUser) {
         return (
@@ -78,7 +125,7 @@ export default function DashboardPage() {
 
                 <section className="space-y-6">
                     <div className="space-y-6">
-                        <div className="grid gap-4 sm:grid-cols-2">
+                        <div className="grid gap-4 sm:grid-cols-3">
                             <article className="rounded-3xl border border-gray-200 bg-white p-4 shadow-lg">
                                 <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Temperatura</p>
                                 <p className="mt-3 text-4xl font-semibold text-cyan-600">
@@ -96,6 +143,32 @@ export default function DashboardPage() {
                                         : "-- lux"}
                                 </p>
                                 <p className="mt-2 text-sm text-gray-600">Umbral recomendado 400 lux</p>
+                            </article>
+                            <article className="rounded-3xl border border-gray-200 bg-white p-4 shadow-lg">
+                                <p className="text-xs uppercase tracking-[0.3em] text-gray-500">
+                                    Presencia
+                                </p>
+
+                                <p
+                                    className={`mt-3 text-3xl font-semibold ${presenceDetected === null
+                                            ? "text-gray-400"
+                                            : presenceDetected
+                                                ? "text-emerald-600"
+                                                : "text-red-500"
+                                        }`}
+                                >
+                                    {presenceDetected === null
+                                        ? "Sin datos"
+                                        : presenceDetected
+                                            ? "Detectada"
+                                            : "No detectada"}
+                                </p>
+
+                                <p className="mt-2 text-sm text-gray-600">
+                                    {presenceAverage !== null
+                                        ? `Promedio ultimos 10 datos: ${presenceAverage.toFixed(2)}`
+                                        : "Esperando lectura del sensor"}
+                                </p>
                             </article>
                         </div>
 
@@ -158,7 +231,7 @@ export default function DashboardPage() {
                                     title="Temperatura"
                                     field={2}
                                     unit="°C"
-                                    refreshMs={15000}
+                                    refreshMs={20000}
                                     onLatestValue={setLatestTemperature}
                                 />
 
@@ -166,7 +239,7 @@ export default function DashboardPage() {
                                     title="Iluminación"
                                     field={3}
                                     unit="lux"
-                                    refreshMs={15000}
+                                    refreshMs={20000}
                                     onLatestValue={setLatestLight}
                                 />
                             </div>
@@ -176,6 +249,7 @@ export default function DashboardPage() {
                                 fields={[
                                     { key: "field2", label: "Temperatura", unit: "°C" },
                                     { key: "field3", label: "Iluminación", unit: "lux" },
+                                    { key: "field1", label: "Presencia", unit: "" },
                                 ]}
                             />
                         </div>
